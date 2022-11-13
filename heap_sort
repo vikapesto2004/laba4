@@ -1,0 +1,33 @@
+from random import randint
+a = [randint(0, 100) for i in range(int(input('Число элементов в массиве: ')))]
+print('Исходный массив: ', *a)
+
+
+def heap(a, i, n):
+    left, right, maxi = 2 * i + 1, 2 * i + 2, i
+    if left <= n and a[left] > a[maxi]:
+        maxi = left
+    if right <= n and a[right] > a[maxi]:
+        maxi = right
+    if maxi == i:
+        return
+    else:
+        a[maxi], a[i] = a[i], a[maxi]
+        heap(a, maxi, n)
+
+
+def max_heap(a):
+    middle = len(a) // 2
+    for i in reversed(range(0, middle + 1)):
+        heap(a, i, len(a) - 1)
+
+
+def heap_sort(a):
+    max_heap(a)
+    for i in reversed(range(0, len(a))):
+        a[0], a[i] = a[i], a[0]
+        heap(a, 0, i - 1)
+
+
+heap_sort(a)
+print('Отсортированный массив: ', *a)
